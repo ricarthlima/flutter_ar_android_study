@@ -26,6 +26,13 @@ class ARScreen extends StatelessWidget {
             onARViewCreated: arVM.onARViewCreated,
             planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
           ),
+          Visibility(
+            visible: arVM.isLoading,
+            child: Align(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            ),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(

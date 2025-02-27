@@ -11,6 +11,8 @@ import 'package:vector_math/vector_math_64.dart';
 class ARViewModel extends ChangeNotifier {
   late ARObjectManager _objectManager;
 
+  bool isLoading = false;
+
   void onARViewCreated(
     ARSessionManager sessionManager,
     ARObjectManager objectManager,
@@ -36,6 +38,14 @@ class ARViewModel extends ChangeNotifier {
       // eulerAngles: Vector3(0, 0, 0),
       // rotation: Vector4(0, 0, 0, 0),
     );
+
+    toggleLoading();
     await _objectManager.addNode(newNode);
+    toggleLoading();
+  }
+
+  toggleLoading() {
+    isLoading = !isLoading;
+    notifyListeners();
   }
 }

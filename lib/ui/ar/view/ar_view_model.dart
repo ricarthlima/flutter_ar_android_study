@@ -12,6 +12,8 @@ import 'package:flutter_ar_android_study/domain/models/furniture.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 class ARViewModel extends ChangeNotifier {
+  Furniture? furniture;
+
   late ARObjectManager _objectManager;
   late ARAnchorManager _anchorManager;
 
@@ -39,7 +41,10 @@ class ARViewModel extends ChangeNotifier {
     sessionManager.onPlaneOrPointTap = onPlaneTapped;
   }
 
-  Future<void> onPlaceObjectClicked(Furniture furniture) async {
+  Future<void> onPlaceObjectClicked(
+    Furniture furniture, {
+    ARPlaneAnchor? planeAnchor,
+  }) async {
     ARNode newNode = ARNode(
       type: NodeType.webGLB,
       uri: furniture.glb,
@@ -50,7 +55,7 @@ class ARViewModel extends ChangeNotifier {
     );
 
     toggleLoading();
-    await _objectManager.addNode(newNode);
+    await _objectManager.addNode(newNode, planeAnchor: planeAnchor);
     toggleLoading();
   }
 
@@ -65,7 +70,11 @@ class ARViewModel extends ChangeNotifier {
 
     bool? result = await _anchorManager.addAnchor(newAnchor);
 
-    if (result != null && result) {}
+    if (result != null && result) {
+      if (furniture != null) {
+        onPlaceObjectClicked(furniture!, planeAnchor: newAnchor);
+      }
+    }
   }
 
   toggleLoading() {

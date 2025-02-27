@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:provider/provider.dart';
+
+import '../view/home_view_model.dart';
 
 class HomeGridWidget extends StatelessWidget {
   final Furniture furniture;
@@ -10,6 +13,7 @@ class HomeGridWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeViewModel homeViewModel = Provider.of<HomeViewModel>(context);
     return SizedBox(
       height: 500,
       child: Column(
@@ -32,7 +36,8 @@ class HomeGridWidget extends StatelessWidget {
                           width: 32,
                           height: 32,
                           child: IconButton.filled(
-                            onPressed: () {},
+                            onPressed: () => homeViewModel
+                                .onFurnitureArViewClicked(furniture),
                             iconSize: 16,
                             icon: Icon(Icons.camera),
                           ),

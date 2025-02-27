@@ -20,9 +20,23 @@ class ARScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(furniture.name)),
-      body: ARView(
-        onARViewCreated: arVM.onARViewCreated,
-        planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
+      body: Stack(
+        children: [
+          ARView(
+            onARViewCreated: arVM.onARViewCreated,
+            planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: ElevatedButton(
+                onPressed: () => arVM.onPlaceObjectClicked(furniture),
+                child: Text("Posicionar mobília"),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -37,7 +37,7 @@ class HomeGridWidget extends StatelessWidget {
                           height: 32,
                           child: IconButton.filled(
                             onPressed: () => homeViewModel
-                                .onFurnitureArViewClicked(furniture),
+                                .onFurnitureArViewClicked(context, furniture),
                             iconSize: 16,
                             icon: Icon(Icons.camera),
                           ),

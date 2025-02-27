@@ -6,6 +6,7 @@ import 'package:ar_flutter_plugin_2/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin_2/models/ar_node.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:vector_math/vector_math_64.dart';
 
 class ARViewModel extends ChangeNotifier {
   late ARObjectManager _objectManager;
@@ -27,7 +28,14 @@ class ARViewModel extends ChangeNotifier {
   }
 
   Future<void> onPlaceObjectClicked(Furniture furniture) async {
-    ARNode newNode = ARNode(type: NodeType.webGLB, uri: furniture.glb);
+    ARNode newNode = ARNode(
+      type: NodeType.webGLB,
+      uri: furniture.glb,
+      scale: Vector3(0.2, 0.2, 0.2),
+      // position: Vector3(0, 0, 0),
+      // eulerAngles: Vector3(0, 0, 0),
+      // rotation: Vector4(0, 0, 0, 0),
+    );
     await _objectManager.addNode(newNode);
   }
 }

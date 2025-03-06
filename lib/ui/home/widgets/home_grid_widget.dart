@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:flutter_ar_android_study/ui/_core/widgets/primary_button.dart';
 import 'package:provider/provider.dart';
 
 import '../view/home_view_model.dart';
@@ -73,13 +74,9 @@ class HomeGridWidget extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              ElevatedButton(
+              PrimaryButton(
                 onPressed: () {},
-                child: Text(
-                  "Adicionar ao carrinho",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 13),
-                ),
+                child: "Comprar",
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/domain/furniture_provider.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:flutter_ar_android_study/ui/ar/permission_screen.dart';
 import 'package:flutter_ar_android_study/ui/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,16 @@ class HomeViewModel extends ChangeNotifier {
   int _indexPage = 0;
 
   // TODO: Quando algum botão de AR for clicado.
-  onFurnitureArViewClicked(Furniture furniture) {}
+  onFurnitureArViewClicked(BuildContext context, Furniture furniture) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return PermissionScreen();
+        },
+      ),
+    );
+  }
 
   // Inicialização
   void initialize() {

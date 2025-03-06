@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/domain/furniture_provider.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:flutter_ar_android_study/ui/home/widgets/home_app_bar.dart';
 import 'package:flutter_ar_android_study/ui/home/widgets/home_grid_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         Provider.of<FurnitureProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text("Toca")),
+      appBar: getHomeAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(

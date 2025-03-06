@@ -36,6 +36,18 @@ class FurnitureProvider extends ChangeNotifier {
     );
   }
 
+  List<Furniture> getRandomListFurniture({int? amount}) {
+    assert(amount == null || amount < listFurniture.length,
+        "Amount can't be bigger than list length.");
+
+    amount ??= listFurniture.length;
+
+    List<Furniture> shuffledList = listFurniture.map((e) => e).toList();
+    shuffledList.shuffle();
+
+    return shuffledList.sublist(0, amount);
+  }
+
   static String getCapture(int index) {
     // assert(index <= totalFurniture || index < 1, "Índice incorreto");
     return "$_urlBase${_pathPrint}cap00$index.png";

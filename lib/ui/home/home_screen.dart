@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ar_android_study/domain/furniture_provider.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
 import 'package:flutter_ar_android_study/ui/_core/dimensions.dart';
 import 'package:flutter_ar_android_study/ui/_core/widgets/section_widget.dart';
+import 'package:flutter_ar_android_study/ui/home/view/home_view_model.dart';
 import 'package:flutter_ar_android_study/ui/home/widgets/home_app_bar.dart';
 import 'package:flutter_ar_android_study/ui/home/widgets/home_grid_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,8 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FurnitureProvider furnitureProvider =
-        Provider.of<FurnitureProvider>(context);
+    HomeViewModel homeViewModel = Provider.of<HomeViewModel>(context);
 
     return Scaffold(
       appBar: getHomeAppBar(context),
@@ -38,10 +37,12 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         spacing: 8,
                         children: List.generate(
-                          furnitureProvider.listFurniture.length,
+                          homeViewModel
+                              .getListHighlightedFurniture(context)
+                              .length,
                           (index) {
-                            Furniture furniture =
-                                furnitureProvider.listFurniture[index];
+                            Furniture furniture = homeViewModel
+                                .getListHighlightedFurniture(context)[index];
                             return HomeGridWidget(furniture: furniture);
                           },
                         ),
@@ -55,10 +56,12 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         spacing: 8,
                         children: List.generate(
-                          furnitureProvider.listFurniture.length,
+                          homeViewModel
+                              .getListDiscountedFurniture(context)
+                              .length,
                           (index) {
-                            Furniture furniture =
-                                furnitureProvider.listFurniture[index];
+                            Furniture furniture = homeViewModel
+                                .getListDiscountedFurniture(context)[index];
                             return HomeGridWidget(furniture: furniture);
                           },
                         ),

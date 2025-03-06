@@ -72,44 +72,64 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  SectionWidget(
-                    title: "Destaques",
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        spacing: 8,
-                        children: List.generate(
-                          homeViewModel
-                              .getListHighlightedFurniture(context)
-                              .length,
-                          (index) {
-                            Furniture furniture = homeViewModel
-                                .getListHighlightedFurniture(context)[index];
-                            return HomeGridWidget(furniture: furniture);
-                          },
+                  if (homeViewModel.indexPage == 0)
+                    SectionWidget(
+                      title: "Destaques",
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          spacing: 8,
+                          children: List.generate(
+                            homeViewModel
+                                .getListHighlightedFurniture(context)
+                                .length,
+                            (index) {
+                              Furniture furniture = homeViewModel
+                                  .getListHighlightedFurniture(context)[index];
+                              return HomeGridWidget(furniture: furniture);
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SectionWidget(
-                    title: "Descontos",
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        spacing: 8,
-                        children: List.generate(
-                          homeViewModel
-                              .getListDiscountedFurniture(context)
-                              .length,
-                          (index) {
-                            Furniture furniture = homeViewModel
-                                .getListDiscountedFurniture(context)[index];
-                            return HomeGridWidget(furniture: furniture);
-                          },
+                  if (homeViewModel.indexPage == 0)
+                    SectionWidget(
+                      title: "Descontos",
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          spacing: 8,
+                          children: List.generate(
+                            homeViewModel
+                                .getListDiscountedFurniture(context)
+                                .length,
+                            (index) {
+                              Furniture furniture = homeViewModel
+                                  .getListDiscountedFurniture(context)[index];
+                              return HomeGridWidget(furniture: furniture);
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  if (homeViewModel.indexPage != 0)
+                    SectionWidget(
+                      title: "Favoritos",
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        runAlignment: WrapAlignment.start,
+                        children:
+                            homeViewModel.getListFavoriteFurniture(context).map(
+                          (Furniture furniture) {
+                            return HomeGridWidget(
+                              furniture: furniture,
+                              onWrap: true,
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ),
                 ],
               ),
             ),

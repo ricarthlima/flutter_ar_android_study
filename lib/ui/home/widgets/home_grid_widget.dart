@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:flutter_ar_android_study/ui/_core/dimensions.dart';
 import 'package:flutter_ar_android_study/ui/_core/widgets/primary_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -9,22 +10,23 @@ import '../view/home_view_model.dart';
 
 class HomeGridWidget extends StatelessWidget {
   final Furniture furniture;
+  final bool onWrap;
   const HomeGridWidget({
     super.key,
     required this.furniture,
+    this.onWrap = false,
   });
 
   @override
   Widget build(BuildContext context) {
     HomeViewModel homeViewModel = Provider.of<HomeViewModel>(context);
     return SizedBox(
+      width: (!onWrap) ? 186 : width(context) / 2 - 20,
       height: 375,
-      width: 186,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            width: 186,
             height: 200,
             child: Stack(
               children: [
@@ -70,12 +72,15 @@ class HomeGridWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  furniture.name,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
+                SizedBox(
+                  height: 48,
+                  child: Text(
+                    furniture.name,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
                 Text(

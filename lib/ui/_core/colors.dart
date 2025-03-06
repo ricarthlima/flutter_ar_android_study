@@ -24,4 +24,6 @@ abstract class AppColors {
   static const Color bottomNavigationBarBackground = Color(0xff000000);
   static const Color bottomNavigationBarSelected = Color(0xfffeea10);
   static const Color bottomNavigationBarUnselected = Color(0xffc6c6c6);
+
+  static const Color barrierDialog = Color.fromARGB(200, 0, 0, 0);
 }

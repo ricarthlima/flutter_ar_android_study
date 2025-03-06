@@ -20,85 +20,91 @@ class HomeGridWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeViewModel homeViewModel = Provider.of<HomeViewModel>(context);
-    return SizedBox(
-      width: (!onWrap) ? 186 : width(context) / 2 - 20,
-      height: 375,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: 200,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: AppColors.buttonBorder,
+    return InkWell(
+      onTap: () => homeViewModel.onFurniturePressed(
+        context: context,
+        furniture: furniture,
+      ),
+      child: SizedBox(
+        width: (!onWrap) ? 186 : width(context) / 2 - 20,
+        height: 375,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 200,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: AppColors.buttonBorder,
+                      ),
+                    ),
+                    child: Image.network(
+                      furniture.capture,
+                      width: 186,
+                      height: 200,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  child: Image.network(
-                    furniture.capture,
-                    width: 186,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: InkWell(
-                        onTap: () =>
-                            homeViewModel.onFurnitureArViewClicked(furniture),
-                        child: SvgPicture.asset("assets/ar-button.svg"),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: InkWell(
+                          onTap: () =>
+                              homeViewModel.onFurnitureArViewClicked(furniture),
+                          child: SvgPicture.asset("assets/ar-button.svg"),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.furnitureWidgetBackground,
+              ),
+              padding: EdgeInsets.all(16),
+              height: 175,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 48,
+                    child: Text(
+                      furniture.name,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.furnitureWidgetBackground,
-            ),
-            padding: EdgeInsets.all(16),
-            height: 175,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 48,
-                  child: Text(
-                    furniture.name,
+                  Text(
+                    "R\$${furniture.price.toStringAsFixed(2).replaceAll(".", ",")}",
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontSize: 22,
                     ),
                   ),
-                ),
-                Text(
-                  "R\$${furniture.price.toStringAsFixed(2).replaceAll(".", ",")}",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
+                  PrimaryButton(
+                    onPressed: () {},
+                    child: "Comprar",
                   ),
-                ),
-                PrimaryButton(
-                  onPressed: () {},
-                  child: "Comprar",
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

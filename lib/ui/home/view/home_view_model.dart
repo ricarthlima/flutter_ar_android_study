@@ -4,6 +4,8 @@ import 'package:flutter_ar_android_study/domain/models/furniture.dart';
 import 'package:flutter_ar_android_study/ui/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/home_furniture_dialog.dart';
+
 class HomeViewModel extends ChangeNotifier {
   // Listas aleatórias para página inicial
   List<Furniture> _listHighlightedFurniture = [];
@@ -86,5 +88,12 @@ class HomeViewModel extends ChangeNotifier {
       _indexPage = index;
       notifyListeners();
     }
+  }
+
+  onFurniturePressed({
+    required BuildContext context,
+    required Furniture furniture,
+  }) {
+    showFurnitureDialog(context: context, furniture: furniture);
   }
 }

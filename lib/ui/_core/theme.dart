@@ -5,6 +5,7 @@ import 'colors.dart';
 
 abstract class ThemeApp {
   static ThemeData lightTheme = ThemeData.light().copyWith(
+    scaffoldBackgroundColor: AppColors.scaffoldBackground,
     textTheme: ThemeData.light().textTheme.apply(
           fontFamily: AppFonts.montserrat,
         ),
@@ -17,6 +18,21 @@ abstract class ThemeApp {
         fontSize: 24,
         color: Colors.black,
       ),
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: AppColors.bottomNavigationBarBackground,
+      surfaceTintColor: AppColors.bottomNavigationBarBackground,
+      indicatorColor: AppColors.bottomNavigationBarBackground,
+      iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
+        (states) {
+          if (states.contains(WidgetState.selected)) {
+            return IconThemeData(color: AppColors.bottomNavigationBarSelected);
+          }
+          return IconThemeData(color: AppColors.bottomNavigationBarUnselected);
+        },
+      ),
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      height: 80,
     ),
   );
 }

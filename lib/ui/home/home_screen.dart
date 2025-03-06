@@ -4,6 +4,7 @@ import 'package:flutter_ar_android_study/ui/_core/dimensions.dart';
 import 'package:flutter_ar_android_study/ui/_core/widgets/section_widget.dart';
 import 'package:flutter_ar_android_study/ui/home/view/home_view_model.dart';
 import 'package:flutter_ar_android_study/ui/home/widgets/home_app_bar.dart';
+import 'package:flutter_ar_android_study/ui/home/widgets/home_bottom_navigation.dart';
 import 'package:flutter_ar_android_study/ui/home/widgets/home_grid_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -17,16 +18,16 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: getHomeAppBar(context),
+      bottomNavigationBar: HomeBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Column(
-          spacing: 32,
           children: [
             SvgPicture.asset(
               "assets/home-banner.svg",
               width: width(context),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
               child: Column(
                 spacing: 32,
                 children: [

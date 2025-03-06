@@ -8,4 +8,5 @@ abstract class AppColors {
   static const Color buttonBorder = Color(0xFF000000);
 
   static const Color textPrimary = Color(0xFF000000);
+  static const Color textSecondary = Color(0xFFFFFFFF);
 }

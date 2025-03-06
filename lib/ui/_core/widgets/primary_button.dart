@@ -23,44 +23,52 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => (onPressed != null) ? onPressed : {},
-      child: Ink(
-        height: height ?? 48,
-        width: width ?? double.infinity,
-        decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: AppColors.buttonBorder,
-            ),
-            color: (onPressed != null)
-                ? AppColors.buttonPrimary
-                : AppColors.buttonDeactivated,
-            boxShadow: [
-              BoxShadow(
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.buttonBorder,
+            offset: Offset(2, 2),
+            blurRadius: 0,
+          )
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed != null ? () => onPressed!() : null,
+          child: Ink(
+            height: height ?? 48,
+            width: width ?? double.infinity,
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
                 color: AppColors.buttonBorder,
-                offset: Offset(2, 2),
-                blurRadius: 0,
-              )
-            ]),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 16,
-          children: [
-            if (leading != null) leading!,
-            Text(
-              child,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontFamily: AppFonts.montserrat,
-                color: AppColors.textPrimary,
-                fontSize: 16,
               ),
+              color: (onPressed != null)
+                  ? AppColors.buttonPrimary
+                  : AppColors.buttonDeactivated,
             ),
-          ],
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              spacing: 8,
+              children: [
+                if (leading != null) leading!,
+                Text(
+                  child,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontFamily: AppFonts.montserrat,
+                    color: AppColors.textPrimary,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

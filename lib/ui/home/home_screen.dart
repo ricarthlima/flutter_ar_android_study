@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/data/list_categories.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:flutter_ar_android_study/ui/_core/colors.dart';
 import 'package:flutter_ar_android_study/ui/_core/dimensions.dart';
 import 'package:flutter_ar_android_study/ui/_core/widgets/section_widget.dart';
 import 'package:flutter_ar_android_study/ui/home/view/home_view_model.dart';
@@ -11,8 +12,23 @@ import 'package:flutter_ar_android_study/ui/home/widgets/home_grid_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../_core/widgets/appbar_text_field.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeViewModel>(context, listen: false).initialize();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +38,19 @@ class HomeScreen extends StatelessWidget {
       appBar: getHomeAppBar(context),
       bottomNavigationBar: HomeBottomNavigationBar(),
       body: SingleChildScrollView(
+        controller: homeViewModel.homeScrollController,
         child: Column(
           children: [
+            Container(
+              height: 80,
+              color: AppColors.appBarBackground,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Center(
+                child: AppbarTextField(
+                  focusNode: homeViewModel.searchFocusNode,
+                ),
+              ),
+            ),
             SvgPicture.asset(
               "assets/home-banner.svg",
               width: width(context),

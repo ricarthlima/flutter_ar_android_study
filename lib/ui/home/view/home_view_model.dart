@@ -8,6 +8,10 @@ class HomeViewModel extends ChangeNotifier {
   List<Furniture> _listHighlightedFurniture = [];
   List<Furniture> _listDiscountedFurniture = [];
 
+  ScrollController homeScrollController = ScrollController();
+  bool isOnTop = true;
+  FocusNode searchFocusNode = FocusNode();
+
   void onSplashEnterButtonPressed(BuildContext context) {
     Navigator.pushReplacement(
       context,
@@ -33,5 +37,24 @@ class HomeViewModel extends ChangeNotifier {
           context.read<FurnitureProvider>().getRandomListFurniture(amount: 4);
     }
     return _listDiscountedFurniture;
+  }
+
+  void initialize() {
+    homeScrollController.addListener(
+      () {
+        isOnTop = homeScrollController.offset <= 80;
+        notifyListeners();
+      },
+    );
+  }
+
+  void jumpToTop(BuildContext context) async {
+    await homeScrollController.animateTo(
+      0,
+      duration: Duration(milliseconds: 1250),
+      curve: Curves.easeInOut,
+    );
+    if (!context.mounted) return;
+    FocusScope.of(context).requestFocus(searchFocusNode);
   }
 }

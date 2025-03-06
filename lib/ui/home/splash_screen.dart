@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Opacity(
-              opacity: 0.6,
+              opacity: 0.4,
               child: Image.asset(
                 "assets/splash-background.jpg",
                 height: height(context),

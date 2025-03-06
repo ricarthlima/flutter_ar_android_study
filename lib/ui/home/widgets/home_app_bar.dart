@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ar_android_study/ui/_core/widgets/appbar_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../_core/colors.dart';
+import '../view/home_view_model.dart';
 
 AppBar getHomeAppBar(BuildContext context) {
+  HomeViewModel homeViewModel = Provider.of<HomeViewModel>(context);
+
   return AppBar(
-    toolbarHeight: 144,
+    toolbarHeight: 64,
     backgroundColor: AppColors.appBarBackground,
     centerTitle: true,
-    title: Column(
-      spacing: 8,
-      children: [
-        SvgPicture.asset(
-          "assets/logo.svg",
-          height: 40,
-        ),
-        AppbarTextField(),
-      ],
+    title: SvgPicture.asset(
+      "assets/logo.svg",
+      height: 40,
     ),
+    actions: [
+      if (!homeViewModel.isOnTop)
+        IconButton(
+          onPressed: () => homeViewModel.jumpToTop(context),
+          icon: Icon(
+            Icons.search,
+            color: AppColors.appBarForeground,
+          ),
+        ),
+    ],
   );
 }

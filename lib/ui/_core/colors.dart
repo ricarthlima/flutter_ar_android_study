@@ -13,6 +13,7 @@ abstract class AppColors {
   static const Color textSecondary = Color(0xFFFFFFFF);
 
   static const Color appBarBackground = Color(0xFF000000);
+  static const Color appBarForeground = Color(0xFFFFFFFF);
 
   static const Color inputBackground = Color(0xFFFFFFFF);
   static const Color inputIconColor = Color(0xFF000000);

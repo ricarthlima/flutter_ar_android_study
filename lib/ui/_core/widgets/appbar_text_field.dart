@@ -6,12 +6,14 @@ class AppbarTextField extends StatelessWidget {
   final double? height;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final FocusNode? focusNode;
 
   const AppbarTextField({
     super.key,
     this.height,
     this.controller,
     this.validator,
+    this.focusNode,
   });
 
   @override
@@ -21,6 +23,7 @@ class AppbarTextField extends StatelessWidget {
       decoration: BoxDecoration(color: AppColors.inputBackground),
       child: Center(
         child: TextFormField(
+          focusNode: focusNode,
           controller: controller,
           validator: validator,
           decoration: InputDecoration(

@@ -79,7 +79,7 @@ class HomeGridWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "R\$${furniture.price}",
+                  "R\$${furniture.price.toStringAsFixed(2).replaceAll(".", ",")}",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,

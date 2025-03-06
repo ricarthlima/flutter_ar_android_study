@@ -29,18 +29,31 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Column(
+                spacing: 32,
                 children: [
                   SectionWidget(
                     title: "Destaques",
                     child: SingleChildScrollView(
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        childAspectRatio: 3.5 / 10,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 8,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        spacing: 8,
+                        children: List.generate(
+                          furnitureProvider.listFurniture.length,
+                          (index) {
+                            Furniture furniture =
+                                furnitureProvider.listFurniture[index];
+                            return HomeGridWidget(furniture: furniture);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  SectionWidget(
+                    title: "Descontos",
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        spacing: 8,
                         children: List.generate(
                           furnitureProvider.listFurniture.length,
                           (index) {

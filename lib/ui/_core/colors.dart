@@ -15,4 +15,6 @@ abstract class AppColors {
   static const Color inputBackground = Color(0xFFFFFFFF);
   static const Color inputIconColor = Color(0xFF000000);
   static const Color inputHintColor = Color(0xFF49454F);
+
+  static const Color furnitureWidgetBackground = Color(0xffEDEDED);
 }

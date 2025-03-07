@@ -58,7 +58,9 @@ class HomeGridWidget extends StatelessWidget {
                         height: 24,
                         child: InkWell(
                           onTap: () => homeViewModel.onFurnitureArViewClicked(
-                              context, furniture),
+                            context,
+                            furniture,
+                          ),
                           child: SvgPicture.asset("assets/ar-button.svg"),
                         ),
                       ),

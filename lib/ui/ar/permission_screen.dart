@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/ui/_core/widgets/primary_button.dart';
 
 class PermissionScreen extends StatelessWidget {
-  const PermissionScreen({super.key});
+  const PermissionScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ar_android_study/ui/_core/fonts.dart';
 
-class ThemeApp {
-  ThemeApp._();
+import 'colors.dart';
 
+abstract class ThemeApp {
   static ThemeData lightTheme = ThemeData.light().copyWith(
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    scaffoldBackgroundColor: AppColors.scaffoldBackground,
+    textTheme: ThemeData.light().textTheme.apply(
+          fontFamily: AppFonts.montserrat,
         ),
-      ),
-    ),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.buttonPrimary),
     appBarTheme: AppBarTheme(
       elevation: 3,
       toolbarHeight: 64,
       titleTextStyle: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 24,
-        color: Colors.black,
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
+        color: AppColors.appBarForeground,
       ),
+      foregroundColor: AppColors.appBarForeground,
+      backgroundColor: AppColors.appBarBackground,
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: AppColors.bottomNavigationBarBackground,
+      surfaceTintColor: AppColors.bottomNavigationBarBackground,
+      indicatorColor: AppColors.bottomNavigationBarBackground,
+      iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
+        (states) {
+          if (states.contains(WidgetState.selected)) {
+            return IconThemeData(color: AppColors.bottomNavigationBarSelected);
+          }
+          return IconThemeData(color: AppColors.bottomNavigationBarUnselected);
+        },
+      ),
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      height: 80,
     ),
   );
 }

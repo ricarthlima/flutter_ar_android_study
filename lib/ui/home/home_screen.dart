@@ -1,38 +1,139 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ar_android_study/domain/furniture_provider.dart';
+import 'package:flutter_ar_android_study/data/list_categories.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
+import 'package:flutter_ar_android_study/ui/_core/colors.dart';
+import 'package:flutter_ar_android_study/ui/_core/dimensions.dart';
+import 'package:flutter_ar_android_study/ui/_core/widgets/section_widget.dart';
+import 'package:flutter_ar_android_study/ui/home/view/home_view_model.dart';
+import 'package:flutter_ar_android_study/ui/home/widgets/home_app_bar.dart';
+import 'package:flutter_ar_android_study/ui/home/widgets/home_bottom_navigation.dart';
+import 'package:flutter_ar_android_study/ui/home/widgets/home_category_widget.dart';
 import 'package:flutter_ar_android_study/ui/home/widgets/home_grid_widget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../_core/widgets/appbar_text_field.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeViewModel>(context, listen: false).initialize();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    FurnitureProvider furnitureProvider =
-        Provider.of<FurnitureProvider>(context);
+    HomeViewModel homeViewModel = Provider.of<HomeViewModel>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text("Toca")),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: GridView.count(
-            crossAxisCount: 2,
-            childAspectRatio: 3.5 / 10,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 8,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            physics: NeverScrollableScrollPhysics(),
-            children: List.generate(
-              furnitureProvider.listFurniture.length,
-              (index) {
-                Furniture furniture = furnitureProvider.listFurniture[index];
-                return HomeGridWidget(furniture: furniture);
-              },
+      appBar: getHomeAppBar(context),
+      bottomNavigationBar: HomeBottomNavigationBar(),
+      body: SingleChildScrollView(
+        controller: homeViewModel.homeScrollController,
+        child: Column(
+          children: [
+            Container(
+              height: 80,
+              color: AppColors.appBarBackground,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Center(
+                child: AppbarTextField(
+                  focusNode: homeViewModel.searchFocusNode,
+                ),
+              ),
             ),
-          ),
+            SvgPicture.asset(
+              "assets/home-banner.svg",
+              width: width(context),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+              child: Column(
+                spacing: 32,
+                children: [
+                  SectionWidget(
+                    title: "Categorias",
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        spacing: 8,
+                        children: listCategories
+                            .map((e) => HomeCategoryWidget(category: e))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                  if (homeViewModel.indexPage == 0)
+                    SectionWidget(
+                      title: "Destaques",
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          spacing: 8,
+                          children: List.generate(
+                            homeViewModel
+                                .getListHighlightedFurniture(context)
+                                .length,
+                            (index) {
+                              Furniture furniture = homeViewModel
+                                  .getListHighlightedFurniture(context)[index];
+                              return HomeGridWidget(furniture: furniture);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (homeViewModel.indexPage == 0)
+                    SectionWidget(
+                      title: "Descontos",
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          spacing: 8,
+                          children: List.generate(
+                            homeViewModel
+                                .getListDiscountedFurniture(context)
+                                .length,
+                            (index) {
+                              Furniture furniture = homeViewModel
+                                  .getListDiscountedFurniture(context)[index];
+                              return HomeGridWidget(furniture: furniture);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (homeViewModel.indexPage != 0)
+                    SectionWidget(
+                      title: "Favoritos",
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        runAlignment: WrapAlignment.start,
+                        children:
+                            homeViewModel.getListFavoriteFurniture(context).map(
+                          (Furniture furniture) {
+                            return HomeGridWidget(
+                              furniture: furniture,
+                              onWrap: true,
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

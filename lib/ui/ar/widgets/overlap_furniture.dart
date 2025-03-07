@@ -8,6 +8,7 @@ class OverlapFurniture extends StatelessWidget {
   final Furniture furniture;
   final bool isShowingControllers;
   final bool isShowingIndicatorText;
+  final bool isShowingIndicatorImage;
   final double barrierOpacity;
 
   final Function? onRotateButtonPressed;
@@ -20,6 +21,7 @@ class OverlapFurniture extends StatelessWidget {
     required this.furniture,
     this.isShowingControllers = false,
     this.isShowingIndicatorText = true,
+    this.isShowingIndicatorImage = true,
     this.barrierOpacity = 0.8,
     this.onRotateButtonPressed,
     this.onZoomInButtonPressed,
@@ -37,14 +39,15 @@ class OverlapFurniture extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: Image.network(
-              furniture.captureWA,
-              width: 300,
-              height: 300,
+          if (isShowingIndicatorImage)
+            Align(
+              alignment: Alignment.center,
+              child: Image.network(
+                furniture.captureWA,
+                width: 300,
+                height: 300,
+              ),
             ),
-          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -73,7 +76,7 @@ class OverlapFurniture extends StatelessWidget {
                       spacing: 16,
                       children: [
                         InkWell(
-                          onTap: () => onRotateButtonPressed,
+                          onTap: () => onRotateButtonPressed?.call(),
                           child: SvgPicture.asset(
                             "assets/button-rotate.svg",
                             width: 48,
@@ -81,7 +84,7 @@ class OverlapFurniture extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () => onZoomInButtonPressed,
+                          onTap: () => onZoomInButtonPressed?.call(),
                           child: SvgPicture.asset(
                             "assets/button-zoom-in.svg",
                             width: 48,
@@ -89,7 +92,7 @@ class OverlapFurniture extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () => onZoomOutButtonPressed,
+                          onTap: () => onZoomOutButtonPressed?.call(),
                           child: SvgPicture.asset(
                             "assets/button-zoom-out.svg",
                             width: 48,
@@ -97,7 +100,7 @@ class OverlapFurniture extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () => onCenterButtonPressed,
+                          onTap: () => onCenterButtonPressed?.call(),
                           child: SvgPicture.asset(
                             "assets/button-center.svg",
                             width: 48,

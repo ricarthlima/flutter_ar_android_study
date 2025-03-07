@@ -19,6 +19,15 @@ class ARViewModel extends ChangeNotifier {
 
   bool isLoading = false;
 
+  bool isDetectedFirstPlane = false;
+
+  void initialize(Furniture furniture) {
+    this.furniture = furniture;
+    isLoading = false;
+    isDetectedFirstPlane = false;
+    notifyListeners();
+  }
+
   void onARViewCreated(
     ARSessionManager sessionManager,
     ARObjectManager objectManager,
@@ -27,7 +36,7 @@ class ARViewModel extends ChangeNotifier {
   ) {
     sessionManager.onInitialize(
       showFeaturePoints: true,
-      showAnimatedGuide: true,
+      showAnimatedGuide: false,
       showWorldOrigin: true,
       showPlanes: true,
 
@@ -39,6 +48,11 @@ class ARViewModel extends ChangeNotifier {
     _anchorManager = anchorManager; // Isso vem depois por necessidade
 
     sessionManager.onPlaneOrPointTap = onPlaneTapped;
+
+    sessionManager.onPlaneDetected = (i) {
+      isDetectedFirstPlane = true;
+      notifyListeners();
+    };
   }
 
   Future<void> onPlaceObjectClicked(

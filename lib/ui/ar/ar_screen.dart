@@ -31,6 +31,8 @@ class ARScreen extends StatelessWidget {
           OverlapFurniture(
             furniture: arVM.furniture!,
             isDetectedFirstPlane: arVM.isDetectedFirstPlane,
+            onZoomInButtonPressed: () => arVM.zoomIn(),
+            onZoomOutButtonPressed: () => arVM.zoomOut(),
           ),
         ],
       ),

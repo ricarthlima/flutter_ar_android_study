@@ -69,6 +69,22 @@ class ARViewModel extends ChangeNotifier {
     _objectManager.onRotationEnd = _onRotationEnded;
   }
 
+  void zoomIn() {
+    if (placedObjectNode != null) {
+      placedObjectNode!.scale *= 1.1;
+      logM(placedObjectNode!.scale);
+      notifyListeners();
+    }
+  }
+
+  void zoomOut() {
+    if (placedObjectNode != null) {
+      placedObjectNode!.scale *= 0.9;
+      logM(placedObjectNode!.scale);
+      notifyListeners();
+    }
+  }
+
   Future<void> _onPlaceObjectClicked(
     Furniture furniture, {
     ARPlaneAnchor? planeAnchor,

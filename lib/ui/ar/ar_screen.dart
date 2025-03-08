@@ -30,12 +30,7 @@ class ARScreen extends StatelessWidget {
           ),
           OverlapFurniture(
             furniture: arVM.furniture!,
-            barrierOpacity: (arVM.isDetectedFirstPlane) ? 0 : 0.75,
-            isShowingControllers: arVM.isDetectedFirstPlane,
-            isShowingIndicatorText: !arVM.isDetectedFirstPlane,
-            isShowingIndicatorImage: !arVM.isDetectedFirstPlane,
-            onCenterButtonPressed: () =>
-                arVM.onPlaceObjectClicked(arVM.furniture!),
+            isDetectedFirstPlane: arVM.isDetectedFirstPlane,
           ),
         ],
       ),

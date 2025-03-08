@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class OverlapFurniture extends StatelessWidget {
   final Furniture furniture;
+  final bool isDetectedFirstPlane;
   final bool isShowingControllers;
   final bool isShowingIndicatorText;
   final bool isShowingIndicatorImage;
@@ -19,6 +20,7 @@ class OverlapFurniture extends StatelessWidget {
   const OverlapFurniture({
     super.key,
     required this.furniture,
+    this.isDetectedFirstPlane = false,
     this.isShowingControllers = false,
     this.isShowingIndicatorText = true,
     this.isShowingIndicatorImage = true,
@@ -31,89 +33,94 @@ class OverlapFurniture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width(context),
-      height: height(context),
-      decoration: BoxDecoration(
-        color: Colors.black.withAlpha((250 * barrierOpacity).floor()),
-      ),
-      child: Stack(
-        children: [
-          if (isShowingIndicatorImage)
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: width(context),
+        height: (isDetectedFirstPlane) ? 120 : null,
+        decoration: BoxDecoration(
+          color: (!isDetectedFirstPlane)
+              ? Colors.black.withAlpha((250 * barrierOpacity).floor())
+              : Colors.transparent,
+        ),
+        child: Stack(
+          children: [
+            if (isShowingIndicatorImage && !isDetectedFirstPlane)
+              Align(
+                alignment: Alignment.center,
+                child: Image.network(
+                  furniture.captureWA,
+                  width: 300,
+                  height: 300,
+                ),
+              ),
             Align(
-              alignment: Alignment.center,
-              child: Image.network(
-                furniture.captureWA,
-                width: 300,
-                height: 300,
-              ),
-            ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 32, horizontal: 48),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 16,
-                children: [
-                  if (isShowingIndicatorText)
-                    Text(
-                      "Mova o dispositivo para posicionar a mobília no ambiente.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.textSecondary,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 32, horizontal: 48),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 16,
+                  children: [
+                    if (isShowingIndicatorText && !isDetectedFirstPlane)
+                      Text(
+                        "Mova o dispositivo para posicionar a mobília no ambiente.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
-                  if (isShowingControllers)
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      spacing: 16,
-                      children: [
-                        InkWell(
-                          onTap: () => onRotateButtonPressed?.call(),
-                          child: SvgPicture.asset(
-                            "assets/button-rotate.svg",
-                            width: 48,
-                            height: 48,
+                    if (isShowingControllers || isDetectedFirstPlane)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 16,
+                        children: [
+                          InkWell(
+                            onTap: () => onRotateButtonPressed?.call(),
+                            child: SvgPicture.asset(
+                              "assets/button-rotate.svg",
+                              width: 48,
+                              height: 48,
+                            ),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () => onZoomInButtonPressed?.call(),
-                          child: SvgPicture.asset(
-                            "assets/button-zoom-in.svg",
-                            width: 48,
-                            height: 48,
+                          InkWell(
+                            onTap: () => onZoomInButtonPressed?.call(),
+                            child: SvgPicture.asset(
+                              "assets/button-zoom-in.svg",
+                              width: 48,
+                              height: 48,
+                            ),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () => onZoomOutButtonPressed?.call(),
-                          child: SvgPicture.asset(
-                            "assets/button-zoom-out.svg",
-                            width: 48,
-                            height: 48,
+                          InkWell(
+                            onTap: () => onZoomOutButtonPressed?.call(),
+                            child: SvgPicture.asset(
+                              "assets/button-zoom-out.svg",
+                              width: 48,
+                              height: 48,
+                            ),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () => onCenterButtonPressed?.call(),
-                          child: SvgPicture.asset(
-                            "assets/button-center.svg",
-                            width: 48,
-                            height: 48,
+                          InkWell(
+                            onTap: () => onCenterButtonPressed?.call(),
+                            child: SvgPicture.asset(
+                              "assets/button-center.svg",
+                              width: 48,
+                              height: 48,
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                ],
+                        ],
+                      )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

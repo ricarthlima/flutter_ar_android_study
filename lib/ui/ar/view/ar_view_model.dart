@@ -69,17 +69,17 @@ class ARViewModel extends ChangeNotifier {
     _objectManager.onRotationEnd = _onRotationEnded;
   }
 
-  void zoomIn() {
+  void zoomIn({bool isPinching = false}) {
     if (placedObjectNode != null) {
-      placedObjectNode!.scale *= 1.1;
+      placedObjectNode!.scale *= isPinching ? 1.01 : 1.1;
       logM(placedObjectNode!.scale);
       notifyListeners();
     }
   }
 
-  void zoomOut() {
+  void zoomOut({bool isPinching = false}) {
     if (placedObjectNode != null) {
-      placedObjectNode!.scale *= 0.9;
+      placedObjectNode!.scale *= isPinching ? 0.99 : 0.9;
       logM(placedObjectNode!.scale);
       notifyListeners();
     }

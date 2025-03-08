@@ -17,9 +17,20 @@ class ARScreen extends StatelessWidget {
       appBar: AppBar(title: Text(arVM.furniture!.name)),
       body: Stack(
         children: [
-          ARView(
-            onARViewCreated: arVM.onARViewCreated,
-            planeDetectionConfig: PlaneDetectionConfig.horizontal,
+          GestureDetector(
+            onScaleUpdate: (details) {
+              if (details.scale > 1) {
+                arVM.zoomIn(isPinching: true);
+              }
+
+              if (details.scale < 1) {
+                arVM.zoomOut(isPinching: true);
+              }
+            },
+            child: ARView(
+              onARViewCreated: arVM.onARViewCreated,
+              planeDetectionConfig: PlaneDetectionConfig.horizontal,
+            ),
           ),
           Visibility(
             visible: arVM.isLoading,

@@ -54,22 +54,22 @@ class ARViewModel extends ChangeNotifier {
     _objectManager = objectManager;
     _anchorManager = anchorManager; // Isso vem depois por necessidade
 
-    sessionManager.onPlaneOrPointTap = onPlaneTapped;
+    sessionManager.onPlaneOrPointTap = _onPlaneTapped;
 
     sessionManager.onPlaneDetected = (i) {
       isDetectedFirstPlane = true;
       notifyListeners();
     };
 
-    _objectManager.onPanStart = onPanStarted;
-    _objectManager.onPanChange = onPanChanged;
-    _objectManager.onPanEnd = onPanEnded;
-    _objectManager.onRotationStart = onRotationStarted;
-    _objectManager.onRotationChange = onRotationChanged;
-    _objectManager.onRotationEnd = onRotationEnded;
+    _objectManager.onPanStart = _onPanStarted;
+    _objectManager.onPanChange = _onPanChanged;
+    _objectManager.onPanEnd = _onPanEnded;
+    _objectManager.onRotationStart = _onRotationStarted;
+    _objectManager.onRotationChange = _onRotationChanged;
+    _objectManager.onRotationEnd = _onRotationEnded;
   }
 
-  Future<void> onPlaceObjectClicked(
+  Future<void> _onPlaceObjectClicked(
     Furniture furniture, {
     ARPlaneAnchor? planeAnchor,
   }) async {
@@ -87,7 +87,7 @@ class ARViewModel extends ChangeNotifier {
       // rotation: Vector4(0, 0, 0, 0),
     );
 
-    toggleLoading();
+    _toggleLoading();
 
     bool? result = await _objectManager.addNode(
       newNode,
@@ -98,10 +98,10 @@ class ARViewModel extends ChangeNotifier {
       placedObjectNode = newNode;
     }
 
-    toggleLoading();
+    _toggleLoading();
   }
 
-  Future<void> onPlaneTapped(List<ARHitTestResult> listResults) async {
+  Future<void> _onPlaneTapped(List<ARHitTestResult> listResults) async {
     ARHitTestResult hitResult = listResults.firstWhere(
       (ARHitTestResult hit) => hit.type == ARHitTestResultType.plane,
     );
@@ -117,43 +117,43 @@ class ARViewModel extends ChangeNotifier {
 
     if (result != null && result) {
       if (furniture != null) {
-        onPlaceObjectClicked(furniture!, planeAnchor: newAnchor);
+        _onPlaceObjectClicked(furniture!, planeAnchor: newAnchor);
       }
     }
   }
 
-  toggleLoading() {
+  void _toggleLoading() {
     isLoading = !isLoading;
     notifyListeners();
   }
 
-  onPanStarted(String nodeName) {
+  void _onPanStarted(String nodeName) {
     logM("Started panning node $nodeName");
   }
 
-  onPanChanged(String nodeName) {
+  void _onPanChanged(String nodeName) {
     logM("Continued panning node $nodeName");
   }
 
-  onPanEnded(String nodeName, Matrix4 newTransform) {
+  void _onPanEnded(String nodeName, Matrix4 newTransform) {
     logM("Ended panning node $nodeName");
-    applyTransformation(newTransform);
+    _applyTransformation(newTransform);
   }
 
-  onRotationStarted(String nodeName) {
+  void _onRotationStarted(String nodeName) {
     logM("Started rotating node $nodeName");
   }
 
-  onRotationChanged(String nodeName) {
+  void _onRotationChanged(String nodeName) {
     logM("Continued rotating node $nodeName");
   }
 
-  onRotationEnded(String nodeName, Matrix4 newTransform) {
+  void _onRotationEnded(String nodeName, Matrix4 newTransform) {
     logM("Ended rotating node $nodeName");
-    applyTransformation(newTransform);
+    _applyTransformation(newTransform);
   }
 
-  void applyTransformation(Matrix4 newTransformation) {
+  void _applyTransformation(Matrix4 newTransformation) {
     if (placedObjectNode != null) {
       placedObjectNode!.transform = newTransformation;
     }

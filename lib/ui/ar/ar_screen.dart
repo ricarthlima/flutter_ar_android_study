@@ -19,7 +19,7 @@ class ARScreen extends StatelessWidget {
         children: [
           ARView(
             onARViewCreated: arVM.onARViewCreated,
-            planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
+            planeDetectionConfig: PlaneDetectionConfig.horizontal,
           ),
           Visibility(
             visible: arVM.isLoading,

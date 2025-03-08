@@ -90,17 +90,17 @@ class OverlapFurniture extends StatelessWidget {
                             ),
                           ),
                           InkWell(
-                            onTap: () => onZoomInButtonPressed?.call(),
+                            onTap: () => onZoomOutButtonPressed?.call(),
                             child: SvgPicture.asset(
-                              "assets/button-zoom-in.svg",
+                              "assets/button-zoom-out.svg",
                               width: 48,
                               height: 48,
                             ),
                           ),
                           InkWell(
-                            onTap: () => onZoomOutButtonPressed?.call(),
+                            onTap: () => onZoomInButtonPressed?.call(),
                             child: SvgPicture.asset(
-                              "assets/button-zoom-out.svg",
+                              "assets/button-zoom-in.svg",
                               width: 48,
                               height: 48,
                             ),

@@ -35,9 +35,9 @@ class ARViewModel extends ChangeNotifier {
     ARLocationManager locationManager,
   ) {
     sessionManager.onInitialize(
-      showFeaturePoints: true,
+      showFeaturePoints: false,
       showAnimatedGuide: false,
-      showWorldOrigin: true,
+      showWorldOrigin: false,
       showPlanes: true,
 
       //handles

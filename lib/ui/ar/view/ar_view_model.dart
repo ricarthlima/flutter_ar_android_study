@@ -21,10 +21,13 @@ class ARViewModel extends ChangeNotifier {
 
   bool isDetectedFirstPlane = false;
 
+  ARNode? placedObjectNode;
+
   void initialize(Furniture furniture) {
     this.furniture = furniture;
     isLoading = false;
     isDetectedFirstPlane = false;
+    placedObjectNode = null;
     notifyListeners();
   }
 
@@ -42,6 +45,8 @@ class ARViewModel extends ChangeNotifier {
 
       //handles
       handleTaps: true,
+      handlePans: true,
+      handleRotation: true,
     );
 
     _objectManager = objectManager;
@@ -59,6 +64,11 @@ class ARViewModel extends ChangeNotifier {
     Furniture furniture, {
     ARPlaneAnchor? planeAnchor,
   }) async {
+    if (placedObjectNode != null) {
+      _objectManager.removeNode(placedObjectNode!);
+      placedObjectNode = null;
+    }
+
     ARNode newNode = ARNode(
       type: NodeType.webGLB,
       uri: furniture.glb,
@@ -69,7 +79,13 @@ class ARViewModel extends ChangeNotifier {
     );
 
     toggleLoading();
-    await _objectManager.addNode(newNode, planeAnchor: planeAnchor);
+    bool? result = await _objectManager.addNode(
+      newNode,
+      planeAnchor: planeAnchor,
+    );
+    if (result != null && result) {
+      placedObjectNode = newNode;
+    }
     toggleLoading();
   }
 

@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
 import 'package:vector_math/vector_math_64.dart';
 
+import '../../../_core/logm.dart';
+
 class ARViewModel extends ChangeNotifier {
   Furniture? furniture;
 
@@ -58,6 +60,13 @@ class ARViewModel extends ChangeNotifier {
       isDetectedFirstPlane = true;
       notifyListeners();
     };
+
+    _objectManager.onPanStart = onPanStarted;
+    _objectManager.onPanChange = onPanChanged;
+    _objectManager.onPanEnd = onPanEnded;
+    _objectManager.onRotationStart = onRotationStarted;
+    _objectManager.onRotationChange = onRotationChanged;
+    _objectManager.onRotationEnd = onRotationEnded;
   }
 
   Future<void> onPlaceObjectClicked(
@@ -79,13 +88,16 @@ class ARViewModel extends ChangeNotifier {
     );
 
     toggleLoading();
+
     bool? result = await _objectManager.addNode(
       newNode,
       planeAnchor: planeAnchor,
     );
+
     if (result != null && result) {
       placedObjectNode = newNode;
     }
+
     toggleLoading();
   }
 
@@ -93,6 +105,9 @@ class ARViewModel extends ChangeNotifier {
     ARHitTestResult hitResult = listResults.firstWhere(
       (ARHitTestResult hit) => hit.type == ARHitTestResultType.plane,
     );
+
+    // Mostra a distância, interessante
+    logM(hitResult.distance);
 
     ARPlaneAnchor newAnchor = ARPlaneAnchor(
       transformation: hitResult.worldTransform,
@@ -110,5 +125,37 @@ class ARViewModel extends ChangeNotifier {
   toggleLoading() {
     isLoading = !isLoading;
     notifyListeners();
+  }
+
+  onPanStarted(String nodeName) {
+    logM("Started panning node $nodeName");
+  }
+
+  onPanChanged(String nodeName) {
+    logM("Continued panning node $nodeName");
+  }
+
+  onPanEnded(String nodeName, Matrix4 newTransform) {
+    logM("Ended panning node $nodeName");
+    applyTransformation(newTransform);
+  }
+
+  onRotationStarted(String nodeName) {
+    logM("Started rotating node $nodeName");
+  }
+
+  onRotationChanged(String nodeName) {
+    logM("Continued rotating node $nodeName");
+  }
+
+  onRotationEnded(String nodeName, Matrix4 newTransform) {
+    logM("Ended rotating node $nodeName");
+    applyTransformation(newTransform);
+  }
+
+  void applyTransformation(Matrix4 newTransformation) {
+    if (placedObjectNode != null) {
+      placedObjectNode!.transform = newTransformation;
+    }
   }
 }

@@ -99,8 +99,8 @@ class ARViewModel extends ChangeNotifier {
       uri: furniture.glb,
       scale: Vector3(0.2, 0.2, 0.2),
       // position: Vector3(0, 0, 0),
-      // eulerAngles: Vector3(0, 0, 0),
-      // rotation: Vector4(0, 0, 0, 0),
+      // eulerAngles: Vector3(0, 90, 0),
+      rotation: Vector4(0, 90, 0, 0),
     );
 
     _toggleLoading();
@@ -115,6 +115,39 @@ class ARViewModel extends ChangeNotifier {
     }
 
     _toggleLoading();
+    // Ticker ticker = Ticker(
+    //   (elapsed) {
+    //     // // Rotação via Transform
+    //     Matrix4 newMatrix = Matrix4.copy(placedObjectNode!.transform);
+    //     newMatrix *= Matrix4.rotationY(0.9 * elapsed.inMilliseconds);
+    //     placedObjectNode!.transform = newMatrix;
+
+    //     // // Rotação via Transform 2
+    //     // Matrix4 currentTransform = placedObjectNode!.transform;
+    //     // // Cria uma nova matriz de rotação de 15° no eixo Y
+    //     // Matrix4 rotationMatrix = Matrix4.rotationY(
+    //     //   radians(0.9 * elapsed.inMilliseconds),
+    //     // );
+    //     // // Aplica a rotação à matriz existente
+    //     // Matrix4 newTransform = currentTransform * rotationMatrix;
+    //     // // Define a nova transformação no objeto
+    //     // placedObjectNode!.transform = newTransform;
+
+    //     // // setRotation
+    //     // if (placedObjectNode != null) {
+    //     //   placedObjectNode!.rotation.setRotationY(elapsed.inMilliseconds * 0.9);
+    //     // }
+
+    //     // // Euler Angles
+    //     // placedObjectNode!.eulerAngles = Vector3(
+    //     //   0,
+    //     //   0.9 * elapsed.inMilliseconds,
+    //     //   0,
+    //     // );
+    //     notifyListeners();
+    //   },
+    // );
+    // ticker.start();
   }
 
   Future<void> _onPlaneTapped(List<ARHitTestResult> listResults) async {

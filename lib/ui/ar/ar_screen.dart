@@ -18,6 +18,7 @@ class ARScreen extends StatelessWidget {
       body: Stack(
         children: [
           GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onScaleUpdate: (details) {
               if (details.scale > 1) {
                 arVM.zoomIn(isPinching: true);

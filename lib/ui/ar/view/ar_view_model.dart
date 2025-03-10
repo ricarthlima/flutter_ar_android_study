@@ -8,6 +8,7 @@ import 'package:ar_flutter_plugin_2/models/ar_anchor.dart';
 import 'package:ar_flutter_plugin_2/models/ar_hittest_result.dart';
 import 'package:ar_flutter_plugin_2/models/ar_node.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_ar_android_study/domain/models/furniture.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -85,6 +86,25 @@ class ARViewModel extends ChangeNotifier {
     }
   }
 
+  void rotate() {
+    // final currentRotation = placedObjectNode!.eulerAngles;
+    // final newRotation = Vector3(
+    //   currentRotation.x - 10,
+    //   currentRotation.y,
+    //   currentRotation.z - 10,
+    // );
+    // placedObjectNode!.eulerAngles = newRotation;
+
+    // Matrix4 newMatrix = Matrix4.copy(placedObjectNode!.transform);
+    // newMatrix *= Matrix4.rotationY(radians(10));
+    // placedObjectNode!.transform = newMatrix;
+
+    logM("EulerAngles: ${placedObjectNode!.eulerAngles}");
+    logM("Rotation: ${placedObjectNode!.rotation}");
+    logM("Transform: ${placedObjectNode!.transform}");
+    notifyListeners();
+  }
+
   Future<void> _onPlaceObjectClicked(
     Furniture furniture, {
     ARPlaneAnchor? planeAnchor,
@@ -118,9 +138,9 @@ class ARViewModel extends ChangeNotifier {
     // Ticker ticker = Ticker(
     //   (elapsed) {
     //     // // Rotação via Transform
-    //     Matrix4 newMatrix = Matrix4.copy(placedObjectNode!.transform);
-    //     newMatrix *= Matrix4.rotationY(0.9 * elapsed.inMilliseconds);
-    //     placedObjectNode!.transform = newMatrix;
+    // Matrix4 newMatrix = Matrix4.copy(placedObjectNode!.transform);
+    // newMatrix *= Matrix4.rotationY(0.9 * elapsed.inMilliseconds);
+    // placedObjectNode!.transform = newMatrix;
 
     //     // // Rotação via Transform 2
     //     // Matrix4 currentTransform = placedObjectNode!.transform;
@@ -139,11 +159,13 @@ class ARViewModel extends ChangeNotifier {
     //     // }
 
     //     // // Euler Angles
-    //     // placedObjectNode!.eulerAngles = Vector3(
-    //     //   0,
-    //     //   0.9 * elapsed.inMilliseconds,
-    //     //   0,
-    //     // );
+    //     final currentRotation = placedObjectNode!.eulerAngles;
+    //     final newRotation = Vector3(
+    //       currentRotation.x - (0.1 * elapsed.inMilliseconds),
+    //       currentRotation.y,
+    //       currentRotation.z,
+    //     );
+    //     placedObjectNode!.eulerAngles = newRotation;
     //     notifyListeners();
     //   },
     // );

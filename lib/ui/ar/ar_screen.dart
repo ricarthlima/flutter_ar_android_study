@@ -45,6 +45,7 @@ class ARScreen extends StatelessWidget {
             isDetectedFirstPlane: arVM.isDetectedFirstPlane,
             onZoomInButtonPressed: () => arVM.zoomIn(),
             onZoomOutButtonPressed: () => arVM.zoomOut(),
+            onRotateButtonPressed: () => arVM.rotate(),
           ),
         ],
       ),
